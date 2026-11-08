@@ -8,7 +8,7 @@
  * Needs: arduino-pico core, library AMLink (https://github.com/Parabol1337/ausbildungsmanager-amlink).
  * Setup: see README.md (target address and port of the server in CH9120.cpp, pairing).
  */
-#include <AMLink.h>
+#include "src/AMLink/AMLink.h"
 
 #include "CH9120.h"
 #include "Wiegand.h"

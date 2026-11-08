@@ -23,8 +23,8 @@ Die bisherige Zeilen-/`cmd`-Logik und die Abhängigkeit von ArduinoJson entfalle
 ## Einrichtung
 
 1. **Arduino IDE** mit dem Kern *Raspberry Pi Pico/RP2040* (arduino-pico) für das Board Waveshare RP2040-ETH.
-2. **AMLink** installieren: <https://github.com/Parabol1337/ausbildungsmanager-amlink> (ZIP oder in
-   `~/Arduino/libraries/AMLink` klonen).
+2. Es muss **nichts weiter installiert werden**: AMLink und alle anderen Bibliotheken liegen im Ordner
+   (`src/AMLink`, siehe [DEPENDENCIES.md](DEPENDENCIES.md); dort steht auch die Version des Board-Pakets).
 3. In `CH9120.cpp` Server und Port eintragen: `CH9120_TARGET_IP` (Adresse des AusbildungsManagers) und
    `CH9120_TARGET_PORT = 8010` (Hardware-Gateway; bisher stand dort 8000). Der Chip verbindet sich damit von selbst.
 4. Sketch hochladen. Auf der seriellen Konsole (9600 Baud) erscheint der Zustand und beim ersten Start der **Kopplungscode**.
@@ -48,8 +48,7 @@ php artisan test --filter=DoorScannerSketchTest
 ```
 
 Er prüft Einrichtung, Kopplung über die Klingel, Karte und PIN bis zur Türöffnung (mit gemessener Impulsdauer), Klingel,
-Türkontakt und das erneute Anmelden nach einem Neustart des Servers. Die Pfade lassen sich über `DOORSCANNER_PATH` und
-`AMLINK_PATH` setzen. Gebaut wird mit `make -C test/host` (nur ein C++-Compiler nötig).
+Türkontakt und das erneute Anmelden nach einem Neustart des Servers. Der Pfad lässt sich über `DOORSCANNER_PATH` setzen. Gebaut wird mit `make -C test/host` (nur ein C++-Compiler nötig).
 
 **Nicht geprüft** ist der Bau und Lauf auf dem echten Board mit dem arduino-pico-Kern: Der Test ersetzt Arduino-Klassen,
 Treiber und CH9120 durch Nachbauten. Zum Beispiel muss `BOOTSEL` im verwendeten Kern verfügbar sein.
