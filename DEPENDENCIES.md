@@ -27,7 +27,7 @@ prüft, ob sich still etwas geändert hat.
 
 | Datei(en) | Zweck | Herkunft / Version |
 |---|---|---|
-| `src/AMLink/` | Verbindung zum AusbildungsManager (Protokoll v2) | eigene Bibliothek, Stand steht in `src/AMLink/VERSION` (Version + Commit). **Nicht von Hand ändern**, sondern im Repo `ausbildungsmanager-amlink` mit `tools/vendor.sh` aktualisieren |
+| `src/AMLink/` | Verbindung zum AusbildungsManager (Protokoll v2) | eigene Bibliothek, Stand steht in `src/AMLink/VERSION` (Version + Commit). **Nicht von Hand ändern**, sondern im Repo `ausbildungsmanager-link` mit `tools/vendor.sh` aktualisieren |
 | `Wiegand.cpp`, `Wiegand.h` | Wiegand-Leser | Herkunft im Code nicht vermerkt (Quelle bitte nachtragen) |
 | `CH9120.cpp`, `CH9120.h`, `CH9120.cfg` | Einrichtung der Netzwerkbrücke (Waveshare-Beispielcode, angepasst) | Waveshare; `CH9120.cpp` enthält **Ziel-IP und -Port** und ist daher nicht in der Prüfsummenliste |
 | `LcdText.h` / `*.ino` | eigener Code | dieses Repository |

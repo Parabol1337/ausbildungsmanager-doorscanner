@@ -5,7 +5,7 @@
  * happens (card, PIN, bell, door contact) and executes what the server tells it (open the door). Who may enter is
  * decided in the AusbildungsManager - there is no access logic in this firmware any more.
  *
- * Needs: arduino-pico core, library AMLink (https://github.com/Parabol1337/ausbildungsmanager-amlink).
+ * Needs: arduino-pico core, library AMLink (https://github.com/Parabol1337/ausbildungsmanager-link).
  * Setup: see README.md (target address and port of the server in CH9120.cpp, pairing).
  */
 #include "src/AMLink/AMLink.h"

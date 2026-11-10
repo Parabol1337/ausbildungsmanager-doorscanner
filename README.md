@@ -2,7 +2,7 @@
 
 Firmware für den Türscanner der Ausbildungswerkstatt: Waveshare **RP2040-ETH** mit **CH9120**-Netzwerkbaustein,
 Wiegand-Leser (Karte und PIN), Klingel, Türkontakt und Türöffner. Die Firmware spricht mit dem AusbildungsManager über
-die Hardware-Schnittstelle ([Protokoll v2](https://github.com/Parabol1337/ausbildungsmanager-next/blob/main/docs/hardware/README.md))
+die Hardware-Schnittstelle ([Protokoll v2](https://github.com/Parabol1337/ausbildungsmanager-core/blob/main/docs/hardware/README.md))
 mit der Bibliothek **AMLink**.
 
 Das Gerät entscheidet nichts: Es meldet, was passiert (Karte gelesen, PIN eingegeben, Klingel, Tür auf/zu), und führt
@@ -43,7 +43,7 @@ und der Türkontakt werden darum herum simuliert; die Verbindung geht über eine
 Test dafür liegt im Server-Repository (`tests/Feature/Hardware/DoorScannerSketchTest.php`):
 
 ```bash
-# im Server-Repository (ausbildungsmanager-next), beide Repositories als Nachbarordner
+# im Server-Repository (ausbildungsmanager-core), beide Repositories als Nachbarordner
 php artisan test --filter=DoorScannerSketchTest
 ```
 
