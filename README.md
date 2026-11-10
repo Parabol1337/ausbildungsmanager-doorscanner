@@ -14,7 +14,7 @@ aus, was der Server verlangt (Tür öffnen). Wer wann eintreten darf, steht im A
 |---|---|---|
 | `reader` | reader | Wiegand-Leser, Ereignis `scan` mit `method` = `rfid` oder `pin` |
 | `door` | lock | Türöffner, Aktion `unlock` (`pulse_ms`, Standard 50 ms, höchstens 10 s) |
-| `door_contact` | binary_sensor | Türkontakt, `on` = Tür offen |
+| `door_contact` | binary_sensor | Türkontakt, `on` = Tür offen (nur wenn einer eingebaut ist, siehe Einrichtung) |
 | `bell` | button | Klingel, Ereignis `press` |
 
 Pinbelegung und Verhalten (34-Bit-Karte, PIN mit Enter, 3 s Eingabe-Timeout) sind wie in der bisherigen Firmware.
@@ -25,10 +25,12 @@ Die bisherige Zeilen-/`cmd`-Logik und die Abhängigkeit von ArduinoJson entfalle
 1. **Arduino IDE** mit dem Kern *Raspberry Pi Pico/RP2040* (arduino-pico) für das Board Waveshare RP2040-ETH.
 2. Es muss **nichts weiter installiert werden**: AMLink und alle anderen Bibliotheken liegen im Ordner
    (`src/AMLink`, siehe [DEPENDENCIES.md](DEPENDENCIES.md); dort steht auch die Version des Board-Pakets).
-3. In `CH9120.cpp` Server und Port eintragen: `CH9120_TARGET_IP` (Adresse des AusbildungsManagers) und
+3. **Türkontakt:** Nicht jede Tür hat einen. Oben in `RP2040-ETH_Door.ino` steht `Door_Contact` auf `1` (eingebaut) oder `0` (keiner).
+   Bei `0` meldet das Gerät keine Entität `door_contact` und liest den Pin nicht. Dasselbe geht beim Bauen mit `-DDoor_Contact=0`.
+4. In `CH9120.cpp` Server und Port eintragen: `CH9120_TARGET_IP` (Adresse des AusbildungsManagers) und
    `CH9120_TARGET_PORT = 8010` (Hardware-Gateway; bisher stand dort 8000). Der Chip verbindet sich damit von selbst.
-4. Sketch hochladen. Auf der seriellen Konsole (9600 Baud) erscheint der Zustand und beim ersten Start der **Kopplungscode**.
-5. **Freigabe** im AusbildungsManager unter *Administration → Hardware*: Das Gerät erscheint als „Wartet auf Freigabe“.
+5. Sketch hochladen. Auf der seriellen Konsole (9600 Baud) erscheint der Zustand und beim ersten Start der **Kopplungscode**.
+6. **Freigabe** im AusbildungsManager unter *Administration → Hardware*: Das Gerät erscheint als „Wartet auf Freigabe“.
    Entweder den angezeigten Code vergleichen und „Code stimmt – freigeben“, oder „Freigabe am Gerät starten“ und innerhalb
    von zwei Minuten die **Klingel** (oder BOOTSEL) drücken. Danach Standort und Raum zuordnen.
 

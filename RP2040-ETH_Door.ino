@@ -13,6 +13,12 @@
 #include "CH9120.h"
 #include "Wiegand.h"
 
+// Setup: is a door contact fitted? 1 = yes (default), 0 = no. Not every door has one. Without it the door station reports
+// no "door_contact" entity and does not read its pin. Change it here, or when building: -DDoor_Contact=0
+#ifndef Door_Contact
+#define Door_Contact 1
+#endif
+
 // Software
 #define Pin_Timeout 3000        // a PIN entry is dropped after this many ms without a key
 #define Default_Pulse_Ms 50     // door opener pulse if the server does not ask for a specific duration
@@ -40,7 +46,9 @@ amlink::PulseOutput opener(Door_Out);
 String Pin_Cache = "";
 unsigned long Pin_LastPress = 0;
 bool Bell_WasPressed = false;
+#if Door_Contact
 int Door_LastState = -1;
+#endif
 
 // The server asks to open the door: energise the opener for the requested time without blocking the loop.
 int onDoor(void*, amlink::Call& call) {
@@ -73,7 +81,9 @@ void setup() {
   Debug_Serial.begin(9600);
 
   pinMode(Bell_In, INPUT_PULLUP);
+#if Door_Contact
   pinMode(Door_In, INPUT);  // door contact
+#endif
   opener.begin();
 
   if (!amLink.begin(amlink::Identity("rp2040-eth-door", "2.0.0"))) {
@@ -84,7 +94,9 @@ void setup() {
 
   amLink.entity("reader", "reader")->label("RFID-Leser").feature("rfid").feature("pin");
   amLink.entity("door", "lock")->label("Türöffner").feature("unlock").attr("max_pulse_ms", 10000L).onAction(onDoor);
+#if Door_Contact
   amLink.entity("door_contact", "binary_sensor")->label("Türkontakt").cls("door");
+#endif
   amLink.entity("bell", "button")->label("Klingel");
   amLink.setState("door", "locked");
 
@@ -97,12 +109,14 @@ void loop() {
   // End of the opener pulse
   if (opener.update()) amLink.setState("door", "locked");
 
+#if Door_Contact
   // Door contact: "on" = door open. Reported on change only.
   int door = digitalRead(Door_In) ? 1 : 0;
   if (door != Door_LastState) {
     Door_LastState = door;
     amLink.setState("door_contact", door ? "on" : "off");
   }
+#endif
 
   // Doorbell: one event per press
   bool bell = digitalRead(Bell_In) == LOW;
